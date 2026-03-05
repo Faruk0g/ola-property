@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Dashboard | Favorites</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --primary-red: #D93025;
+            --bg-gray: #F8F9FA;
+            --sidebar-width: 260px;
+            --text-main: #1A1A1A;
+            --text-secondary: #70757a;
+            --white: #ffffff;
+            --border: #e8eaed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-section img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+
+        .profile-section h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .profile-section p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: 0.2s;
+        }
+
+        .nav-item.active {
+            background: #fdf2f2;
+            color: var(--primary-red);
+            font-weight: 600;
+        }
+
+        .badge {
+            background: #FBBC04;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 40px 4%;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .tab-link {
+            padding-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-link.active {
+            color: var(--text-main);
+            font-weight: 700;
+            border-bottom-color: var(--text-main);
+        }
+
+        .btn-red {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* --- PROPERTY GRID --- */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .location {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .specs {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+                z-index: 100;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/150" alt="Avatar">
+            <h3>Essien Effiom Essien</h3>
+            <p>House buyer</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active">Favorites <span class="badge">8</span></a>
+            <a href="#" class="nav-item">Saved searches <span class="badge">2</span></a>
+            <a href="#" class="nav-item">Comments</a>
+            <a href="#" class="nav-item">Collaborate</a>
+            <a href="#" class="nav-item">Notification</a>
+            <a href="#" class="nav-item">Edit Profile</a>
+        </nav>
+        <a href="#" style="text-decoration: none; font-size: 13px; color: #666;">← Back to RDC</a>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-row">
+            <h1>Favorites</h1>
+            <button class="btn-red">View On Map</button>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-link active">Shared Favourites</div>
+            <div class="tab-link">My Favourites</div>
+            <div class="tab-link">Co-Buyer Favorites</div>
+            <div class="tab-link">Hidden</div>
+        </div>
+
+        <div class="property-grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500"
+                    alt="Lekki">
+                <div class="card-body">
+                    <h3>Lekki phase 1</h3>
+                    <p class="location">Admiralty way</p>
+                    <div class="specs">
+                        <span>3 Bed</span> <span>2 Bath</span> <span>1.142SF</span>
+                    </div>
+                    <p class="price">$1,249,000</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=500"
+                    alt="Magodo">
+                <div class="card-body">
+                    <h3>Magodo phase 2</h3>
+                    <p class="location">Mainland</p>
+                    <div class="specs">
+                        <span>3 Bed</span> <span>2 Bath</span> <span>1.142SF</span>
+                    </div>
+                    <p class="price">$1,249,000</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=500"
+                    alt="Osapa">
+                <div class="card-body">
+                    <h3>Osapa-London</h3>
+                    <p class="location">Island</p>
+                    <div class="specs">
+                        <span>3 Bed</span> <span>2 Bath</span> <span>1.142SF</span>
+                    </div>
+                    <p class="price">$1,249,000</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple Interaction Script
+        const tabs = document.querySelectorAll('.tab-link');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
